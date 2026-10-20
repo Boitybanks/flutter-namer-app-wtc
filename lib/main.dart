@@ -161,7 +161,7 @@ class FavoritesPage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.all(20),
-          child: Text('You have ${state.favorites.length} favorites:',
+          child: Text('You have ${state.favorites.length} ${state.favorites.length == 1 ? 'favorite' : 'favorites'}:',
               style: Theme.of(context).textTheme.titleLarge),
         ),
         for (final pair in state.favorites)
