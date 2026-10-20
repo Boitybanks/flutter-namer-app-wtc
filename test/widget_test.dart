@@ -18,7 +18,7 @@ void main() {
     await tester.tap(find.text('Like'));
     await tester.pump();
     expect(find.text('Unlike'), findsOneWidget);
-    await tester.tap(find.byIcon(Icons.favorite).last);
+    await tester.tap(find.text('Favorites'));
     await tester.pumpAndSettle();
     expect(find.text('You have 1 favorite:'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.delete_outline));
