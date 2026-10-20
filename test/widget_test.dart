@@ -20,7 +20,7 @@ void main() {
     expect(find.text('Unlike'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.favorite).last);
     await tester.pumpAndSettle();
-    expect(find.text('You have 1 favorites:'), findsOneWidget);
+    expect(find.text('You have 1 favorite:'), findsOneWidget);
     await tester.tap(find.byIcon(Icons.delete_outline));
     await tester.pump();
     expect(find.text('No favorites yet.'), findsOneWidget);
