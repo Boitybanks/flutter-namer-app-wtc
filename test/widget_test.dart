@@ -25,4 +25,18 @@ void main() {
     await tester.pump();
     expect(find.text('No favorites yet.'), findsOneWidget);
   });
+  testWidgets('Unlike removes the current word pair from favorites', (tester) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.tap(find.text('Like'));
+    await tester.pump();
+    expect(find.text('Unlike'), findsOneWidget);
+
+    await tester.tap(find.text('Unlike'));
+    await tester.pump();
+    expect(find.text('Like'), findsOneWidget);
+
+    await tester.tap(find.text('Favorites'));
+    await tester.pumpAndSettle();
+    expect(find.text('No favorites yet.'), findsOneWidget);
+  });
 }
