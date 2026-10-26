@@ -22,6 +22,23 @@ void main() {
       state.dispose();
     });
 
+
+    test('toggling favorite notifies listeners for add and remove', () {
+      final state = MyAppState();
+      var notifications = 0;
+      state.addListener(() => notifications++);
+      final pair = state.current;
+
+      state.toggleFavorite();
+      expect(state.favorites.where((favorite) => favorite == pair).length, 1);
+      expect(notifications, 1);
+
+      state.toggleFavorite();
+      expect(state.favorites, isNot(contains(pair)));
+      expect(notifications, 2);
+      state.dispose();
+    });
+
     test('changing the current pair notifies listeners', () {
       final state = MyAppState();
       var notifications = 0;
