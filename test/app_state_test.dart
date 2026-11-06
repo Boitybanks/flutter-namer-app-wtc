@@ -22,7 +22,6 @@ void main() {
       state.dispose();
     });
 
-
     test('toggling favorite notifies listeners for add and remove', () {
       final state = MyAppState();
       var notifications = 0;
@@ -47,6 +46,18 @@ void main() {
       state.getNext();
 
       expect(notifications, 1);
+      state.dispose();
+    });
+
+    test('undo restores original order without duplicate favorites', () {
+      final state = MyAppState();
+      final first = WordPair('bright', 'river');
+      final second = WordPair('quiet', 'moon');
+      state.favorites.addAll([first, second]);
+      state.removeFavorite(first);
+      state.restoreFavorite(first, 0);
+      state.restoreFavorite(first, 0);
+      expect(state.favorites, [first, second]);
       state.dispose();
     });
 
