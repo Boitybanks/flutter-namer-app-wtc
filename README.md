@@ -50,8 +50,14 @@ flutter run -d chrome
 
 `MyAppState` owns the current `WordPair` and the in-memory favorites list. Favorites are not persisted between restarts.
 
-## Evidence status — 22 October 2026
-The project is committed to `main`, with GitHub Actions configured to run `flutter analyze` and `flutter test` on each push. An earlier CI run reported a widget-test failure; navigation selection was corrected and an additional Like/Unlike regression test was added. **The latest CI result and live UI behavior have not yet been verified.** Do not mark validation complete until a run succeeds.
+## Evidence status — 6 November 2026
+
+GitHub Actions has passed `flutter analyze`, all 12 state/widget tests, and the
+release web build for the design refresh. The tests include copy feedback,
+favorite removal with Undo, and phone/desktop navigation at double text size.
+The preview workflow captures the actual Flutter web build. Generator previews
+have been inspected at phone and desktop sizes; favorites are covered by interaction tests.
+Android/iOS device testing remains separate from this web and widget validation.
 
 ### Code snapshot
 - `lib/main.dart` — Material 3 app, Provider state, generator and favorites pages
@@ -71,10 +77,21 @@ The application follows the Flutter codelab; the visual design, tests, and docum
 - [x] Word-pair generator and favorites implementation
 - [x] Responsive navigation
 - [x] Widget and state unit tests written
-- [ ] Static analysis and tests executed successfully
-- [ ] Screenshots of generator and favorites screens
+- [x] Static analysis and tests executed successfully
+- [x] Generator screenshots at phone and desktop sizes
+- [ ] Favorites screenshot
 - [ ] 5–10 minute narrated demonstration recorded
 - [ ] Final elective evidence submitted by 30 October 2026
 
 ## Author
 Boitumelo Banks — WeThinkCode_ Software Engineering
+
+## Design previews
+
+These are screenshots of the compiled Flutter web app, not design mockups.
+
+![Phone generator](docs/screenshots/namer-mobile.png)
+
+![Desktop generator](docs/screenshots/namer-desktop.png)
+
+Validation run: https://github.com/Boitybanks/flutter-namer-app-wtc/actions/runs/42223766909
