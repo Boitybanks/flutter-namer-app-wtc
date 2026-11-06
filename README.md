@@ -12,6 +12,23 @@ This repository follows the [Flutter first app codelab](https://codelabs.develop
 - Widget tests for generation, favorite management, and the Like/Unlike flow
 - Unit tests for state changes and ChangeNotifier listener notifications
 
+## Design refresh — November 2026
+
+A warm naming studio built with Flutter's Material 3 widgets: cream surfaces,
+deep green name cards, lime accents, and a clearer visual hierarchy. The generator
+has an animated two-line word reveal, a labeled copy control, and visible saved
+feedback. Favorites include a guided empty state and an Undo action after removal.
+Navigation adapts from a bottom bar to a rail. Content scrolls, actions wrap, and
+text follows the system text size; name animations respect reduced-motion settings.
+
+No new runtime packages, remote fonts, accounts, or network calls were added.
+Copying writes only the selected name to the clipboard, on request. Favorites
+remain in memory and reset when the app restarts.
+
+The refresh was implemented with AI assistance and remains a learning project.
+`MyAppState` still owns the data; widgets observe it through Provider. Undo restores
+a removed name at its original position without creating duplicates.
+
 ## Learning concepts
 - Stateless and stateful widgets; widget composition
 - `ChangeNotifier`, `ChangeNotifierProvider`, `context.watch` and `notifyListeners`
@@ -47,7 +64,7 @@ The project is committed to `main`, with GitHub Actions configured to run `flutt
 3. GitHub Actions green check for both static analysis and widget tests.
 4. A narrated 5–10 minute demonstration explaining the code and interactions.
 
-The application follows the Flutter codelab; the tests and documentation are subsequent improvements. Firebase Authentication is a separate elective deliverable and is **not implemented in this repository**.
+The application follows the Flutter codelab; the visual design, tests, and documentation are subsequent improvements. Firebase Authentication is a separate elective deliverable and is **not implemented in this repository**.
 
 ### Proof checklist
 - [x] Word-pair generator and favorites implementation

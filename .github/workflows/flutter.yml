@@ -6,9 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -21,3 +25,22 @@ jobs:
         run: flutter analyze
       - name: Widget tests
         run: flutter test
+      - name: Build web preview
+        run: flutter build web --no-web-resources-cdn
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install preview browser
+        run: |
+          npm install --prefix /tmp/namer-preview --no-package-lock playwright@1.56.1
+          /tmp/namer-preview/node_modules/.bin/playwright install --with-deps chromium
+      - name: Capture phone and desktop previews
+        env:
+          NAMER_PLAYWRIGHT_PATH: /tmp/namer-preview/node_modules/playwright
+        run: node tool/capture_previews.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: namer-design-preview
+          path: |
+            preview-artifacts/
+            build/web/
