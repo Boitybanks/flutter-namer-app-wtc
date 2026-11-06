@@ -6,8 +6,9 @@ This repository follows the [Flutter first app codelab](https://codelabs.develop
 
 ## Features
 - Generate random English word pairs with **Next**
+- Copy a name to the clipboard with confirmation
 - Like/unlike the current suggestion
-- Browse saved favorites and remove them
+- Browse saved favorites, remove them, and undo a removal
 - Adaptive navigation: bottom bar on narrow screens, navigation rail on wider screens
 - Widget tests for generation, favorite management, and the Like/Unlike flow
 - Unit tests for state changes and ChangeNotifier listener notifications

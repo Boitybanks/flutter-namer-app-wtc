@@ -185,11 +185,11 @@ class BrandMark extends StatelessWidget {
   const BrandMark({super.key});
 
   @override
-  Widget build(BuildContext context) => const Row(
-    mainAxisSize: MainAxisSize.min,
+  Widget build(BuildContext context) => const Wrap(
+    crossAxisAlignment: WrapCrossAlignment.center,
+    spacing: 8,
     children: [
       Icon(Icons.bubble_chart_rounded, color: ink, size: 30),
-      SizedBox(width: 8),
       Text(
         'namer.',
         style: TextStyle(
@@ -216,8 +216,10 @@ class PageFrame extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const BrandMark(),
-            const SizedBox(height: 40),
+            if (MediaQuery.sizeOf(context).width < 760) ...[
+              const BrandMark(),
+              const SizedBox(height: 28),
+            ],
             ...children,
           ],
         ),
