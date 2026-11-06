@@ -18,7 +18,7 @@ const fs = require('node:fs/promises');
     browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
     await fs.mkdir('preview-artifacts', { recursive: true });
     for (const [name, viewport] of Object.entries({ mobile: { width: 390, height: 844 }, desktop: { width: 1440, height: 1000 } })) {
-      const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
+      const page = await browser.newPage({ viewport, deviceScaleFactor: 1, locale: 'en-ZA' });
       page.on('console', message => console.log(`${name}: ${message.type()}: ${message.text()}`));
       page.on('pageerror', error => console.error(`${name}: ${error.message}`));
       await page.addInitScript(() => {
