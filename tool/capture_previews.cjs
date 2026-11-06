@@ -15,15 +15,22 @@ const fs = require('node:fs/promises');
       if (attempt === 39) throw new Error('Preview server did not start');
       await new Promise(resolve => setTimeout(resolve, 250));
     }
-    browser = await chromium.launch({ headless: true });
+    browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
     await fs.mkdir('preview-artifacts', { recursive: true });
     for (const [name, viewport] of Object.entries({ mobile: { width: 390, height: 844 }, desktop: { width: 1440, height: 1000 } })) {
       const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
+      page.on('console', message => console.log(`${name}: ${message.type()}: ${message.text()}`));
+      page.on('pageerror', error => console.error(`${name}: ${error.message}`));
       await page.addInitScript(() => {
         window.addEventListener('flutter-first-frame', () => { window.flutterReady = true; });
       });
       await page.goto('http://127.0.0.1:8080');
-      await page.waitForFunction(() => window.flutterReady === true, null, { timeout: 60000 });
+      try {
+        await page.waitForFunction(() => window.flutterReady === true, null, { timeout: 60000 });
+      } catch (error) {
+        await page.screenshot({ path: `preview-artifacts/${name}-failed.png` });
+        throw error;
+      }
       // The first frame precedes the final font rasterization in CanvasKit.
       await page.waitForTimeout(2000);
       await page.screenshot({ path: `preview-artifacts/namer-${name}.png` });
