@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +26,7 @@ jobs:
       - name: Widget tests
         run: flutter test
       - name: Build web preview
+        id: web-build
         run: flutter build web --no-web-resources-cdn
       - uses: actions/setup-node@v4
         with:
@@ -39,6 +40,7 @@ jobs:
           NAMER_PLAYWRIGHT_PATH: /tmp/namer-preview/node_modules/playwright
         run: node tool/capture_previews.cjs
       - uses: actions/upload-artifact@v4
+        if: always() && steps.web-build.outcome == 'success'
         with:
           name: namer-design-preview
           path: |
